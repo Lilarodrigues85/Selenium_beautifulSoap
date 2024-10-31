@@ -42,12 +42,13 @@ def get_book_details(book_url, driver):
 
         # Extraindo informações principais
         title = soup.find('strong').text.strip() if soup.find('strong') else "N/A"
-        author = soup.find('a').text.strip() if soup.find('a') else "N/A"
+        author = soup.find('a', title=True)
+        author_name = author.text.strip() if author else "N/A"
         
         logging.info(f"Detalhes do livro extraídos com sucesso: {title}")
         return {
             "title": title,
-            "author": author,
+            "author": author_name,
             "url": book_url
         }
     except Exception as e:
